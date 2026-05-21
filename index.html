@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ePortfolio — Business Communication</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink: #1a1410;
+      --cream: #faf7f2;
+      --warm: #f0e8d8;
+      --accent: #b85c2c;
+      --accent2: #3d6b5e;
+      --muted: #8a7d6e;
+      --line: #d8cfc2;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0;
+      list-style: none;
+    }
+
+    .nav-tabs li button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 0 1.2rem;
+      height: 64px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .nav-tabs li button:hover { color: var(--ink); }
+    .nav-tabs li button.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── PAGES ── */
+    .page { display: none; padding-top: 64px; min-height: 100vh; }
+    .page.active { display: block; animation: fadeUp 0.45s ease; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HERO (Home) ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 64px);
+    }
+
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 5rem 4rem 5rem 5rem;
+    }
+
+    .hero-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(2.8rem, 4vw, 4.2rem);
+      line-height: 1.1;
+      margin-bottom: 1.8rem;
+      color: var(--ink);
+    }
+
+    .hero-title em { color: var(--accent); font-style: italic; }
+
+    .hero-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #4a3f34;
+      max-width: 520px;
+    }
+
+    .hero-body p + p { margin-top: 1rem; }
+
+    .hero-visual {
+      background: var(--warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 39px,
+        var(--line) 39px,
+        var(--line) 40px
+      );
+      opacity: 0.5;
+    }
+
+    .monogram {
+      font-family: var(--serif);
+      font-size: 14rem;
+      font-style: italic;
+      color: var(--accent);
+      opacity: 0.12;
+      position: absolute;
+      user-select: none;
+    }
+
+    .quote-block {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem;
+    }
+
+    .quote-block blockquote {
+      font-family: var(--serif);
+      font-size: 1.6rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+      max-width: 340px;
+    }
+
+    .quote-block cite {
+      display: block;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-style: normal;
+    }
+
+    /* ── SECTION WRAPPER ── */
+    .section-wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+      padding-bottom: 1.2rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-num {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      color: var(--line);
+      font-style: italic;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      color: var(--ink);
+    }
+
+    /* ── CONTENT BLOCKS ── */
+    .prose p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: #3a302a;
+      margin-bottom: 1.2rem;
+    }
+
+    .prose h3 {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin: 2rem 0 0.6rem;
+      font-style: italic;
+    }
+
+    /* ── ABOUT ME ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .profile-photo-placeholder {
+      width: 200px;
+      height: 240px;
+      background: var(--warm);
+      border: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .profile-photo-placeholder svg {
+      width: 48px;
+      height: 48px;
+      opacity: 0.35;
+    }
+
+    /* ── DOCUMENT CARDS ── */
+    .doc-card {
+      border: 1px solid var(--line);
+      background: white;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: box-shadow 0.2s;
+    }
+
+    .doc-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
+    .doc-info { flex: 1; }
+    .doc-name {
+      font-family: var(--serif);
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .doc-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .btn-doc {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.2rem;
+      background: var(--accent);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-doc:hover { background: #9a4a20; }
+
+    .btn-doc.green { background: var(--accent2); }
+    .btn-doc.green:hover { background: #2d5548; }
+
+    /* ── REFLECTIVE CALLOUT ── */
+    .reflective-box {
+      border-left: 3px solid var(--accent);
+      background: var(--warm);
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+    }
+
+    .reflective-box .box-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 0.6rem;
+    }
+
+    /* ── TAGS / KEYWORDS ── */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .tag {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: white;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 2.5rem 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-text { padding: 3rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      nav { padding: 0 1rem; }
+      .nav-logo { display: none; }
+      .nav-tabs li button { padding: 0 0.6rem; font-size: 0.68rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAVIGATION ══ -->
+<nav>
+  <span class="nav-logo">ePortfolio</span>
+  <ul class="nav-tabs">
+    <li><button class="active" onclick="show('home', this)">Home</button></li>
+    <li><button onclick="show('about', this)">About Me</button></li>
+    <li><button onclick="show('job', this)">Job Application</button></li>
+    <li><button onclick="show('group', this)">Group Project</button></li>
+    <li><button onclick="show('correspondence', this)">Correspondence</button></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — HOME
+══════════════════════════════════════ -->
+<section class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-text">
+      <p class="hero-label">Business Communication · ePortfolio</p>
+      <h1 class="hero-title">A Semester of <em>Learning to Communicate</em></h1>
+      <div class="hero-body">
+        <p>
+          Welcome to my ePortfolio — a curated collection of the writing, thinking, and professional development I have undertaken throughout this Business Communication course. This site is both an archive and an argument: it demonstrates not merely <em>what</em> I produced, but <em>how</em> and <em>why</em> my skills as a communicator have grown over the term.
+        </p>
+        <p>
+          Effective business communication is far more than grammar and formatting. It is the art of meeting an audience where they are — understanding their needs, their concerns, and their expectations — and then crafting a message that is clear, credible, and compelling. This semester, I have learned that every document I create is a rhetorical act: I am always making choices about ethos (my credibility as a writer), pathos (my connection to the reader's values and emotions), and logos (the logic and evidence that support my claims). These three classical appeals have become lenses through which I now read and revise all my professional writing.
+        </p>
+        <p>
+          This portfolio is organized into five sections. The <strong>About Me</strong> page introduces who I am beyond the classroom. The <strong>Job Application Materials</strong> page showcases my résumé, cover letter, and thank-you letter — documents I refined through multiple rounds of feedback. The <strong>Group Project</strong> page presents our team's formal report and reflects on what collaborative writing taught me. The <strong>Correspondence</strong> page features a revised business letter, demonstrating how I applied instructor feedback to meet professional standards.
+        </p>
+        <p>
+          Taken together, these pages tell a story of growth. I arrived in this course believing that professional writing was mostly a matter of following templates. I leave it understanding that communication is a practice — one that demands ongoing attention to purpose, audience, and context. I hope this portfolio demonstrates that understanding, and I invite you to explore each section to see the evidence for yourself.
+        </p>
+        <p>
+          Thank you for visiting. Whether you are a future employer, an instructor, or a fellow student, I hope what you find here reflects the genuine effort and reflection I have invested in becoming a stronger communicator.
+        </p>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <span class="monogram">E</span>
+      <div class="quote-block">
+        <blockquote>
+          "The single biggest problem in communication is the illusion that it has taken place."
+        </blockquote>
+        <cite>— George Bernard Shaw</cite>
+      </div>
+    </div>
+  </div>
+  <footer>Business Communication ePortfolio &nbsp;·&nbsp; All rights reserved</footer>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — ABOUT ME
+══════════════════════════════════════ -->
+<section class="page" id="page-about">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About Me</h2>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <div class="profile-photo-placeholder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span>Your Photo Here</span>
+        </div>
+      </div>
+      <div class="prose">
+        <p>
+          Hello! My name is <strong>[Your Name]</strong>, and I am a student at <strong>[Your University]</strong> studying <strong>[Your Major]</strong>. I grew up in <strong>[Your City/State]</strong>, a place that shaped my love for community, collaboration, and storytelling. From a young age, I was drawn to activities that required both creativity and structure — whether that was writing for my high school newspaper, competing on a debate team, or volunteering at local nonprofits.
+        </p>
+        <p>
+          Outside the classroom, I spend much of my time pursuing interests that keep me grounded and curious. I am an avid reader — particularly of narrative nonfiction and historical fiction — and I believe that reading broadly has made me a more empathetic and versatile writer. I also enjoy hiking, cooking new recipes on weekends, and playing guitar (mostly badly, but with great enthusiasm).
+        </p>
+        <p>
+          Professionally, I have been exploring a career in <strong>[Your Field — e.g., marketing, finance, management]</strong>. I have held internships and part-time roles that exposed me to real workplace communication: drafting emails to clients, contributing to team reports, and presenting data to supervisors. Each experience reinforced how essential clear, professional writing is in every industry.
+        </p>
+        <p>
+          I value authenticity and thoroughness in everything I do. I believe the best communicators are those who take time to truly understand their audience before they write a single word. That belief has guided me throughout this course and will continue to guide my professional life. This ePortfolio is a reflection of both who I am and who I am working to become — a thoughtful, skilled, and adaptable professional communicator.
+        </p>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">Communication</span>
+      <span class="tag">Teamwork</span>
+      <span class="tag">Leadership</span>
+      <span class="tag">Writing</span>
+      <span class="tag">[Your Major]</span>
+      <span class="tag">[Your Hometown]</span>
+    </div>
+  </div>
+  <footer>Business Communication ePortfolio &nbsp;·&nbsp; All rights reserved</footer>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — JOB APPLICATION MATERIALS
+══════════════════════════════════════ -->
+<section class="page" id="page-job">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Job Application Materials</h2>
+    </div>
+
+    <!-- Documents -->
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">Résumé</div>
+        <div class="doc-desc">Finalized one-page professional résumé (personal contact info removed)</div>
+      </div>
+      <a href="#" class="btn-doc" title="View Résumé">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">Cover Letter</div>
+        <div class="doc-desc">Finalized cover letter tailored to a target position (personal info removed)</div>
+      </div>
+      <a href="#" class="btn-doc" title="View Cover Letter">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View
+      </a>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">Mock Thank-You Letter</div>
+        <div class="doc-desc">Post-interview thank-you letter for a simulated interview scenario (personal info removed)</div>
+      </div>
+      <a href="#" class="btn-doc" title="View Thank-You Letter">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View
+      </a>
+    </div>
+
+    <hr class="divider"/>
+
+    <!-- Reflective Statement -->
+    <div class="reflective-box">
+      <div class="box-label">Reflective Statement</div>
+    </div>
+
+    <div class="prose">
+      <p>
+        Before this course, I thought a résumé was simply a list — degrees here, jobs there, skills somewhere in the middle. What I learned this semester is that a résumé is a carefully engineered argument. Every bullet point must answer an implicit question the employer is asking: <em>Why should I hire you over the other candidates?</em> Learning to write strong achievement-based bullet points — focusing on results rather than duties, using active verbs, and quantifying outcomes wherever possible — transformed a document I had used for years into something genuinely persuasive.
+      </p>
+      <p>
+        The cover letter was perhaps my most significant writing challenge. I had always written generic cover letters that summarized my résumé rather than extending it. This semester I learned that a cover letter must do something the résumé cannot: it must create a narrative. It should explain not just what I have done, but why I want this specific role at this specific organization, and how my background positions me to solve the employer's particular problems. Revising my cover letter through multiple drafts, applying feedback about specificity and audience awareness, produced a document I am genuinely proud of.
+      </p>
+      <p>
+        The mock thank-you letter was a genre I had never written before. I learned that a thank-you letter is not just etiquette — it is a strategic continuation of the interview. It reminds the interviewer of the key strengths I bring, addresses any concerns that may have arisen during the conversation, and demonstrates professionalism and follow-through. These are all qualities employers value highly.
+      </p>
+      <p>
+        Taken together, these three documents represent a complete professional narrative. They demonstrate that I understand not only how to present my qualifications, but how to frame them for maximum impact with a specific audience. That skill — tailoring message to audience — is, I believe, the most transferable lesson I am taking from this course.
+      </p>
+    </div>
+  </div>
+  <footer>Business Communication ePortfolio &nbsp;·&nbsp; All rights reserved</footer>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 — GROUP PROJECT
+══════════════════════════════════════ -->
+<section class="page" id="page-group">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Group Project</h2>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">Group Project Report — Final Version</div>
+        <div class="doc-desc">Long-form business report produced collaboratively with team members</div>
+      </div>
+      <a href="#" class="btn-doc green" title="View Group Report">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View
+      </a>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="reflective-box">
+      <div class="box-label">Reflective Statement</div>
+    </div>
+
+    <div class="prose">
+      <h3>Writing a Long Business Message</h3>
+      <p>
+        The Group Project Report was the most structurally complex document I have ever produced. Unlike a one-page memo or a brief email, a formal business report must sustain an argument across many pages, using headings, subheadings, visuals, and appendices to organize information for readers who may not read the document linearly. Learning to write effective executive summaries — distilling a long report into a page that stands alone — was particularly challenging and rewarding.
+      </p>
+      <p>
+        I also developed a much stronger understanding of the research and citation practices that distinguish professional reports from academic papers. Business reports must balance thoroughness with readability; they must present evidence clearly and efficiently, without overwhelming the reader with raw data. Finding that balance required multiple revisions and a willingness to cut material I had worked hard to gather.
+      </p>
+
+      <h3>Working as a Team</h3>
+      <p>
+        The collaborative process was a lesson in itself. Our team of <strong>[X]</strong> members brought different strengths and different work styles to the project. Early on, we struggled with version control and inconsistent formatting across sections written by different authors. We solved this by assigning a single team member to do a final formatting pass, and by agreeing on a style guide before we began drafting.
+      </p>
+      <p>
+        More challenging was coordinating our voices so that the report read as a unified document rather than a patchwork of individually authored sections. I learned that strong collaborative writing requires not just editing your own work, but reading and revising your teammates' contributions with the same critical eye — and accepting their edits of your own writing with generosity rather than defensiveness.
+      </p>
+      <p>
+        The group project reinforced something this course has emphasized throughout: effective communication requires attention to audience, purpose, and structure — and those demands become even more complex when multiple writers must produce a single coherent message. I am a more collaborative and adaptable writer because of this experience.
+      </p>
+    </div>
+  </div>
+  <footer>Business Communication ePortfolio &nbsp;·&nbsp; All rights reserved</footer>
+</section>
+
+<!-- ══════════════════════════════════════
+     PAGE 5 — CORRESPONDENCE
+══════════════════════════════════════ -->
+<section class="page" id="page-correspondence">
+  <div class="section-wrap">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Correspondence</h2>
+    </div>
+
+    <div class="doc-card">
+      <div class="doc-info">
+        <div class="doc-name">Business Letter — Revised Version</div>
+        <div class="doc-desc">Formal business letter revised based on instructor feedback; demonstrates professional correspondence conventions</div>
+      </div>
+      <a href="#" class="btn-doc" title="View Business Letter">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        View
+      </a>
+    </div>
+
+    <hr class="divider"/>
+
+    <div class="reflective-box">
+      <div class="box-label">Reflective Statement — Rhetoric in Action</div>
+    </div>
+
+    <div class="prose">
+      <h3>Ethos: Establishing Credibility</h3>
+      <p>
+        Before this course, I understood ethos vaguely — I knew it had something to do with seeming trustworthy. This semester gave me a practical vocabulary for it. Ethos in a business letter is built through precision: correct formatting, accurate information, professional tone, and scrupulous attention to the conventions the reader expects. When I first drafted my business letter, I made several errors that undermined my ethos — informal contractions, imprecise language, and a greeting that was not properly formatted. My revised letter corrects these, demonstrating that I can meet the standards of professional correspondence.
+      </p>
+
+      <h3>Pathos: Connecting with the Reader</h3>
+      <p>
+        Pathos does not mean being emotional in a business letter — it means being human. My revised letter is more attentive to the reader's perspective: it anticipates their concerns, acknowledges shared goals, and frames my request in terms of mutual benefit rather than personal need. This shift — from a writer-centered to a reader-centered approach — is one of the most significant rhetorical lessons I have internalized this semester. The instructor's feedback pushed me to ask, at every point in the letter: <em>Why does the reader care about this?</em> That question now guides all my professional writing.
+      </p>
+
+      <h3>Logos: Building a Logical Argument</h3>
+      <p>
+        My original letter presented a request without adequate supporting reasoning. The revised version structures its argument more deliberately: it identifies the problem or opportunity clearly, provides relevant evidence and context, and arrives at a specific, reasonable request. The logic flows from premise to conclusion in a way that respects the reader's intelligence and time.
+      </p>
+      <p>
+        Writing this letter — and then revising it substantially — showed me that rhetoric is not a set of decorative techniques applied after the thinking is done. Ethos, pathos, and logos are built into the structure of every effective communication. They are the architecture of persuasion. Recognizing that architecture, and learning to build it deliberately, is perhaps the most lasting skill I am taking from this course.
+      </p>
+    </div>
+  </div>
+  <footer>Business Communication ePortfolio &nbsp;·&nbsp; All rights reserved</footer>
+</section>
+
+<script>
+  function show(id, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
